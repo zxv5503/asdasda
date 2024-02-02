@@ -129,19 +129,25 @@ public class EmpCLI {
 					sql = "select * from emp";
 
 					ResultSet rs = stmt.executeQuery(sql);
+					list = new ArrayList<>();
 
 					while (rs.next()) {
-						Emp emp = new Emp(rs.getInt("empno"), rs.getString("ename"), rs.getString("job"),
-								rs.getInt("mgr"), rs.getString("hiredate"), rs.getDouble("sal"), rs.getDouble("comm"),
-								rs.getInt("deptno"));
-						list.add(emp);
+						try {
+							Emp emp = new Emp(rs.getInt("empno"), rs.getString("ename"), rs.getString("job"),
+									rs.getInt("mgr"), rs.getString("hiredate"), rs.getDouble("sal"),
+									rs.getDouble("comm"), rs.getInt("deptno"));
+							list.add(emp);
+						} catch (NumberFormatException e) {
+							System.out.println("올바른 숫자 형식이 아닙니다. 다시입력해주세요.");
+						}
 					}
 
+					
 					for (Emp emp : list) {
 						System.out.println(emp.empno + ", " + emp.ename + ", " + emp.job + ", " + emp.mgr + ", "
 								+ emp.hiredate + ", " + emp.sal + ", " + emp.comm + ", " + emp.deptno);
-
 					}
+					
 					break;
 
 				case 2:
